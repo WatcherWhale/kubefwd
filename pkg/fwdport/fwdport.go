@@ -63,8 +63,8 @@ type PortForwardOpts struct {
 	LocalIp    net.IP
 	LocalPort  string
 	// Timeout for the port-forwarding process
-	Timeout    int
-	HostFile   *HostFileWithLock
+	Timeout  int
+	HostFile *HostFileWithLock
 
 	// Context is a unique key (string) in kubectl config representing
 	// a user/cluster combination. Kubefwd uses context as the
@@ -313,6 +313,12 @@ func (pfo *PortForwardOpts) AddHosts() {
 
 		pfo.addHost(fmt.Sprintf(
 			"%s.%s.svc.cluster.local",
+			pfo.Service,
+			pfo.Namespace,
+		))
+
+		pfo.addHost(fmt.Sprintf(
+			"%s.%s.svc.cluster.local.",
 			pfo.Service,
 			pfo.Namespace,
 		))
